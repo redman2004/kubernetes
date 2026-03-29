@@ -1,0 +1,15 @@
+---
+kind: Kustomization
+
+resources:
+  - deployment.yml
+  - service.yml
+  - ingress.yml
+  - secrets.yml
+
+configMapGenerator:
+  - name: sundaland-backend-config
+    literals:
+      - SUNDALAND_ADMIN_TOKEN=admin
+      - SUNDALAND_MONGODB_DATABASE=Sundaland
+      - SUNDALAND_MONGODB_HOST=mongodb.sundaland.svc.cluster.local

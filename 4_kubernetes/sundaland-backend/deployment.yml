@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sundaland-backend
+  labels:
+    app: sundaland
+    component: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sundaland
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: sundaland
+        component: backend
+    spec:
+      containers:
+        - name: sundaland-backend
+          image: registry.cri.epita.fr/ing/majeures/tc/info/sundaland/sundaland-backend:1.0.0
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: sundaland-backend-config
+            - secretRef:
+                name: sundaland-mongodb-credentials
+            - secretRef:
+                name: sundaland-admin-token
+      imagePullSecrets:
+        - name: sundaland-pull-secret
