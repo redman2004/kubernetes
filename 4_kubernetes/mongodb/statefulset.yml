@@ -30,11 +30,15 @@ spec:
             - name: mongodb-data
               mountPath: /data/db
             - name: mongodb-initdb
-              mountPath: /docker-entrypoint-initdb.d/
+              mountPath: /docker-entrypoint-initdb.d/init.js
               subPath: init.js
           env:
             - name: MONGO_INITDB_DATABASE
               value: "Sundaland"
+      volumes:
+        - name: mongodb-initdb
+          configMap:
+            name: mongodb-initdb
       imagePullSecrets:
         - name: sundaland-pull-secret
 
